@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Join our email list</title>
+    <link rel="stylesheet" href="Styles/main.css">
+
+</head>
+<body>
+    <div class="form-container">
+        <h1>Join Our Email List</h1>
+        <p>To join our email list, enter your name and email address below.</p>
+        <form action="emailList" method="post">
+    <input type="hidden" name="action" value="add">
+
+    <label for="email">Email Address:</label>
+    <input type="email" id="email" name="email"><br>
+
+    <label for="first-name">First Name:</label>
+    <input type="text" id="first-name" name="firstName"><br>
+
+    <label for="last-name">Last Name:</label>
+    <input type="text" id="last-name" name="lastName"><br>
+
+    <button type="submit">Join Now</button>
+</form>
+
+    </div>
+</body>
+</html>
