@@ -1,14 +1,28 @@
-# Sử dụng Tomcat 9
+# ----------------
+# Stage 1: Build project bằng Maven
+# ----------------
+FROM maven:3.8.5-openjdk-17 AS builder
+
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+
+# Build Maven, bỏ test cho nhanh
+RUN mvn clean package -DskipTests
+
+# ----------------
+# Stage 2: Deploy vào Tomcat
+# ----------------
 FROM tomcat:9.0
 
-# Xóa ứng dụng mặc định của Tomcat
+# Xóa app mặc định
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy file WAR từ thư mục dist/ vào thư mục deploy của Tomcat
-COPY dist/webemail.war /usr/local/tomcat/webapps/ROOT.war
+# Copy WAR từ builder vào Tomcat
+COPY --from=builder /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 # Mở cổng 8080
 EXPOSE 8080
 
-# Lệnh chạy Tomcat khi container khởi động
+# Start Tomcat
 CMD ["catalina.sh", "run"]
