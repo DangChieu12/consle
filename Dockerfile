@@ -1,13 +1,13 @@
-# Sử dụng Tomcat làm base image
+# Sử dụng Tomcat 9 làm base image
 FROM tomcat:9.0
 
-# Xóa ứng dụng mặc định của Tomcat (ROOT)
+# Xóa ứng dụng mặc định ROOT
 RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
-# Copy file WAR đã build vào Tomcat và đặt tên là ROOT.war
+# Copy file WAR đã build sẵn trong dist/ vào Tomcat và đặt tên ROOT.war
 COPY dist/*.war /usr/local/tomcat/webapps/ROOT.war
 
-# Expose port 8080 để Render mapping
+# Expose port 8080 để truy cập web
 EXPOSE 8080
 
 # Chạy Tomcat
