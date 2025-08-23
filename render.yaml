@@ -3,7 +3,6 @@ services:
     name: webemail
     env: docker
     plan: free
-    repo: https://github.com/DangChieu12/consle
     dockerfilePath: ./Dockerfile
-    branch: main
-    autoDeploy: true
+    buildCommand: ""
+    startCommand: ""
