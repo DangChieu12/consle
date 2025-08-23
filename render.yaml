@@ -6,3 +6,5 @@ services:
     dockerfilePath: ./Dockerfile
     buildCommand: ""
     startCommand: ""
+    ports:
+      - 8080
