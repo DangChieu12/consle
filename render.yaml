@@ -1,6 +1,12 @@
 services:
   - type: web
-    name: my-ant-app
+    name: my-java-app
     env: docker
     plan: free
+    dockerfilePath: ./Dockerfile
     autoDeploy: true
+    envVars:
+      - key: JAVA_OPTS
+        value: "-Xmx512m"
+    ports:
+      - 8080
