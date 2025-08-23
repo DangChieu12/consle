@@ -5,7 +5,8 @@ FROM tomcat:9.0-jdk11
 RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Copy WAR vào ROOT.war (để chạy ở /)
-COPY dist/webemail.war /webemail.war
+FROM tomcat:9.0.108-jdk11
 
+COPY dist/ROOT.war /usr/local/tomcat/webapps/
 
 EXPOSE 8080
