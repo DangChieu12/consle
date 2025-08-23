@@ -1,28 +1,13 @@
-# ----------------
-# Stage 1: Build project bằng Maven
-# ----------------
-FROM maven:3.8.5-openjdk-17 AS builder
-
+# Stage 1: Build WAR với Ant
+FROM openjdk:11 AS builder
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY . /app
+RUN apt-get update && apt-get install -y ant
+RUN ant clean dist
 
-# Build Maven, bỏ test cho nhanh
-RUN mvn clean package -DskipTests
-
-# ----------------
-# Stage 2: Deploy vào Tomcat
-# ----------------
-FROM tomcat:9.0
-
-# Xóa app mặc định
+# Stage 2: Deploy WAR vào Tomcat
+FROM tomcat:9.0-jdk11
 RUN rm -rf /usr/local/tomcat/webapps/*
-
-# Copy WAR từ builder vào Tomcat
-COPY --from=builder /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
-
-# Mở cổng 8080
+COPY --from=builder /app/dist/webmail.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
-
-# Start Tomcat
 CMD ["catalina.sh", "run"]
